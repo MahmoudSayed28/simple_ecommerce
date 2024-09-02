@@ -76,8 +76,8 @@ class _LoginViewState extends State<LoginView> {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return AlertDialog(
-                                title: const Text('error'),
+                              return const AlertDialog(
+                                title: Text('error'),
                                 content: Text('Wrong email or password'),
                               );
                             });

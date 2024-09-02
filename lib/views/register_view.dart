@@ -1,8 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-
-import 'package:e_commerce/helper/show_snacbar.dart';
-import 'package:e_commerce/helper/signup_function.dart';
 import 'package:e_commerce/views/home_view.dart';
 import 'package:e_commerce/views/login_view.dart';
 import 'package:e_commerce/widgets/custom_button.dart';
@@ -25,18 +22,20 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     late String email;
     late String password;
-    bool isloading =false;
+    bool isloading = false;
     GlobalKey<FormState> formKey = GlobalKey();
     return Form(
       key: formKey,
       child: ModalProgressHUD(
-        inAsyncCall:isloading ,
+        inAsyncCall: isloading,
         child: Scaffold(
           appBar: AppBar(
             title: const Text(
               'Register',
               style: TextStyle(
-                  color: Colors.white, fontSize: 30, fontWeight: FontWeight.w500),
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w500),
             ),
           ),
           body: SingleChildScrollView(
@@ -51,12 +50,11 @@ class _RegisterViewState extends State<RegisterView> {
                     child: Icon(Icons.person, size: 60),
                   ),
                 ),
-                 CustomTextField(
+                CustomTextField(
                   ispassword: false,
                   hintText: 'Enter Your username',
                   icon: Icons.person,
-                   onChanged: (value) {
-                  },
+                  onChanged: (value) {},
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
@@ -64,7 +62,7 @@ class _RegisterViewState extends State<RegisterView> {
                   hintText: 'Email',
                   icon: Icons.email,
                   onChanged: (value) {
-                    email=value;
+                    email = value;
                   },
                 ),
                 const SizedBox(height: 10),
@@ -81,24 +79,31 @@ class _RegisterViewState extends State<RegisterView> {
                   text: 'Register',
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                        isloading = true;
-                    setState(() {});
+                      isloading = true;
+                      setState(() {});
 
                       try {
-                        await createAccount(email: email, password: password);
-                         isloading = false;
-                      setState(() {});
-                        Navigator.pushReplacementNamed(context, HomeView.id,);
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'weak-password') {
-                          showSnackBar(
-                              context, 'The password provided is too weak.');
-                        } else if (e.code == 'email-already-in-use') {
-                          showSnackBar(context,
-                              'The account already exists for that email.');
-                        }
+                        await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                          email: email,
+                          password: password,
+                        );
+                        isloading = false;
+                        setState(() {});
+                        Navigator.pushReplacementNamed(
+                          context,
+                          HomeView.id,
+                        );
                       } catch (e) {
-                        showSnackBar(context, e.toString());
+                        showDialog(
+                            context: context,
+                            builder: (contxt) {
+                              return AlertDialog(
+                                // ignore: prefer_const_constructors
+                                title: Text('error'),
+                                content: Text('$e'),
+                              );
+                            });
                       }
                     }
                   },
