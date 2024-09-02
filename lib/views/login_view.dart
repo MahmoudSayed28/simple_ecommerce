@@ -71,7 +71,7 @@ class _LoginViewState extends State<LoginView> {
                             email: email, password: password);
                         isloading = false;
                         setState(() {});
-                        Navigator.pushNamed(context, HomeView.id);
+                        Navigator.pushReplacementNamed(context, HomeView.id);
                       } catch (e) {
                         showDialog(
                             context: context,
@@ -90,7 +90,7 @@ class _LoginViewState extends State<LoginView> {
                   text: 'Don\'t  have an account? ',
                   option: ' SignUp ',
                   onTap: () {
-                    Navigator.pushNamed(context, RegisterView.id);
+                    Navigator.pushReplacementNamed(context, RegisterView.id);
                   },
                 ),
               ],

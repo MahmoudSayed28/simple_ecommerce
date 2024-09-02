@@ -88,7 +88,7 @@ class _RegisterViewState extends State<RegisterView> {
                         await createAccount(email: email, password: password);
                          isloading = false;
                       setState(() {});
-                        Navigator.pushNamed(context, HomeView.id,);
+                        Navigator.pushReplacementNamed(context, HomeView.id,);
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'weak-password') {
                           showSnackBar(
@@ -108,7 +108,7 @@ class _RegisterViewState extends State<RegisterView> {
                   text: ' have an account? ',
                   option: ' sign in ',
                   onTap: () {
-                    Navigator.pushNamed(context, LoginView.id);
+                    Navigator.pushReplacementNamed(context, LoginView.id);
                   },
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:e_commerce/models/theme_model.dart';
 import 'package:e_commerce/views/cart_view.dart';
+import 'package:e_commerce/views/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -90,6 +91,7 @@ class CustomDrawer extends StatelessWidget {
                     text: 'Logout',
                     onTap: ()async {
                       await FirebaseAuth.instance.signOut();
+                      Navigator.pushNamedAndRemoveUntil(context, LoginView.id, (route) => false,);
                     })
               ],
             ),
