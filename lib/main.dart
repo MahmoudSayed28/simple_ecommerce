@@ -39,7 +39,9 @@ FirebaseAuth.instance
       print('*********User is signed in!********');
     }
   });
+ 
     super.initState();
+     
   }
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,8 @@ FirebaseAuth.instance
             HomeView.id: (context) => const HomeView(),
             CartView.id: (context) => const CartView(),
           },
-          home: FirebaseAuth.instance.currentUser == null ?const LoginView():const HomeView(),
+          home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeView(),
+
         );}
       ),
     );

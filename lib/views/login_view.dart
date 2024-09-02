@@ -1,9 +1,5 @@
-
-
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:e_commerce/helper/login_function.dart';
-import 'package:e_commerce/helper/show_snacbar.dart';
 import 'package:e_commerce/views/home_view.dart';
 import 'package:e_commerce/views/register_view.dart';
 import 'package:e_commerce/widgets/custom_button.dart';
@@ -24,77 +20,77 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
-  late  String email;
-  late  String password;
-  GlobalKey<FormState> formkay=GlobalKey();
-  bool isloading =false;
-    return ModalProgressHUD(
-      inAsyncCall: isloading,
-      child: Form(
-        key: formkay,
+    late String email;
+    late String password;
+    bool isloading = false;
+    GlobalKey<FormState> formkay = GlobalKey();
+    return Form(
+      key: formkay,
+      child: ModalProgressHUD(
+        inAsyncCall: isloading,
         child: Scaffold(
           appBar: AppBar(
             title: const Text(
               'LogIn',
               style: TextStyle(
-                  color: Colors.white, fontSize: 30, fontWeight: FontWeight.w500),
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w500),
             ),
           ),
           body: SingleChildScrollView(
             child: Column(
               children: [
                 const SizedBox(height: 180),
-                 CustomTextField(
+                CustomTextField(
                   ispassword: false,
                   hintText: 'Email',
                   icon: Icons.email,
                   onChanged: (value) {
-                 email=value;   
+                    email = value;
                   },
                 ),
                 const SizedBox(height: 10),
-                 CustomTextField(
+                CustomTextField(
                   ispassword: true,
                   hintText: 'Password',
                   icon: Icons.visibility,
-                   onChanged: (value) {
-                 password=value;   
+                  onChanged: (value) {
+                    password = value;
                   },
                 ),
                 const SizedBox(height: 30),
-                 CustomButton(text: 'LogIn',onPressed: () async{
-                   if (formkay.currentState!.validate()) {
-                    isloading=true;
-                    setState(() {
-                      
-                    });
-                    try {
-                      await signWithEmailPassword(email: email, passWord: password);
-                      isloading=false;
-                      setState(() {
-                        
-                      });
-                      Navigator.pushNamed(context, HomeView.id);
-                    } on FirebaseAuthException catch (e) {
-                        if (e.code == 'user-not-found') {
-                          showSnackBar(context, 'No user found for that email.');
-                        } else if (e.code == 'wrong-password') {
-                       showSnackBar(
-                              context, 'Wrong password provided for that user.');
-                        }
+                CustomButton(
+                  text: 'LogIn',
+                  onPressed: () async {
+                    if (formkay.currentState!.validate()) {
+                      isloading = true;
+                      setState(() {});
+                      try {
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                            email: email, password: password);
+                        isloading = false;
+                        setState(() {});
+                        Navigator.pushNamed(context, HomeView.id);
                       } catch (e) {
-                       showSnackBar(context, e.toString());
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text('error'),
+                                content: Text('Wrong email or password'),
+                              );
+                            });
                       }
-                     
-                   }
-                 },),
+                    }
+                  },
+                ),
                 const SizedBox(height: 30),
                 CustomRow(
                   text: 'Don\'t  have an account? ',
                   option: ' SignUp ',
                   onTap: () {
-                                        Navigator.pushNamed(context, RegisterView.id);
-
+                    Navigator.pushNamed(context, RegisterView.id);
                   },
                 ),
               ],

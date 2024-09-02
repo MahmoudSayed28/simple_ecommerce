@@ -1,6 +1,6 @@
 import 'package:e_commerce/models/theme_model.dart';
 import 'package:e_commerce/views/cart_view.dart';
-import 'package:e_commerce/views/register_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -88,8 +88,8 @@ class CustomDrawer extends StatelessWidget {
                 CustomListTile(
                     icon: const Icon(Icons.exit_to_app, size: 30),
                     text: 'Logout',
-                    onTap: () {
-                      Navigator.pushNamed(context, RegisterView.id);
+                    onTap: ()async {
+                      await FirebaseAuth.instance.signOut();
                     })
               ],
             ),
