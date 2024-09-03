@@ -42,14 +42,14 @@ class _RegisterViewState extends State<RegisterView> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 110,
                 ),
-                const Center(
-                  child: CircleAvatar(
-                    radius: 70,
-                    child: Icon(Icons.person, size: 60),
-                  ),
-                ),
+                // const Center(
+                //   child: CircleAvatar(
+                //     radius: 70,
+                //     child: Icon(Icons.person, size: 60),
+                //   ),
+                // ),
                 CustomTextField(
                   ispassword: false,
                   hintText: 'Enter Your username',
